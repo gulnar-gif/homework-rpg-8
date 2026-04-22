@@ -1,0 +1,86 @@
+@startuml
+title State Pattern - Homework 8
+
+interface HeroState {
+  +getName(): String
+  +modifyOutgoingDamage(basePower: int): int
+  +modifyIncomingDamage(rawDamage: int): int
+  +onTurnStart(hero: Hero): void
+  +onTurnEnd(hero: Hero): void
+  +canAct(): boolean
+}
+
+class Hero {
+  -name: String
+  -hp: int
+  -maxHp: int
+  -attackPower: int
+  -defense: int
+  -state: HeroState
+  +Hero(name: String, hp: int, attackPower: int, defense: int, initialState: HeroState)
+  +getName(): String
+  +getHp(): int
+  +getMaxHp(): int
+  +getAttackPower(): int
+  +getDefense(): int
+  +isAlive(): boolean
+  +getState(): HeroState
+  +setState(state: HeroState): void
+  +attack(): int
+  +takeDamage(amount: int): void
+  +heal(amount: int): void
+  +onTurnStart(): void
+  +onTurnEnd(): void
+  +canAct(): boolean
+  +printStatus(): void
+}
+
+class NormalState {
+  +getName(): String
+  +modifyOutgoingDamage(basePower: int): int
+  +modifyIncomingDamage(rawDamage: int): int
+  +onTurnStart(hero: Hero): void
+  +onTurnEnd(hero: Hero): void
+  +canAct(): boolean
+}
+
+class PoisonedState {
+  -turnsRemaining: int
+  +PoisonedState(turns: int)
+  +getName(): String
+  +modifyOutgoingDamage(basePower: int): int
+  +modifyIncomingDamage(rawDamage: int): int
+  +onTurnStart(hero: Hero): void
+  +onTurnEnd(hero: Hero): void
+  +canAct(): boolean
+}
+
+class StunnedState {
+  -turnsRemaining: int
+  +StunnedState(turns: int)
+  +getName(): String
+  +modifyOutgoingDamage(basePower: int): int
+  +modifyIncomingDamage(rawDamage: int): int
+  +onTurnStart(hero: Hero): void
+  +onTurnEnd(hero: Hero): void
+  +canAct(): boolean
+}
+
+class BerserkState {
+  +getName(): String
+  +modifyOutgoingDamage(basePower: int): int
+  +modifyIncomingDamage(rawDamage: int): int
+  +onTurnStart(hero: Hero): void
+  +onTurnEnd(hero: Hero): void
+  +canAct(): boolean
+}
+
+HeroState <|.. NormalState
+HeroState <|.. PoisonedState
+HeroState <|.. StunnedState
+HeroState <|.. BerserkState
+
+Hero --> HeroState : current state
+HeroState ..> Hero : affects
+
+@enduml

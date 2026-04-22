@@ -1,0 +1,83 @@
+@startuml
+title Template Method Pattern - Homework 8
+
+abstract class TowerFloor {
+  +explore(party: List<Hero>): FloorResult
+  #announce(): void
+  #setup(party: List<Hero>): void
+  #resolveChallenge(party: List<Hero>): FloorResult
+  #shouldAwardLoot(result: FloorResult): boolean
+  #awardLoot(party: List<Hero>, result: FloorResult): void
+  #cleanup(party: List<Hero>): void
+  #getFloorName(): String
+}
+
+class CombatFloor {
+  -monster: Monster
+  -floorName: String
+  +CombatFloor(floorName: String)
+  #setup(party: List<Hero>): void
+  #resolveChallenge(party: List<Hero>): FloorResult
+  #awardLoot(party: List<Hero>, result: FloorResult): void
+  #cleanup(party: List<Hero>): void
+  #getFloorName(): String
+}
+
+class TrapFloor {
+  -floorName: String
+  +TrapFloor(floorName: String)
+  #setup(party: List<Hero>): void
+  #resolveChallenge(party: List<Hero>): FloorResult
+  #awardLoot(party: List<Hero>, result: FloorResult): void
+  #cleanup(party: List<Hero>): void
+  #getFloorName(): String
+}
+
+class RestFloor {
+  -floorName: String
+  +RestFloor(floorName: String)
+  #announce(): void
+  #setup(party: List<Hero>): void
+  #resolveChallenge(party: List<Hero>): FloorResult
+  #shouldAwardLoot(result: FloorResult): boolean
+  #awardLoot(party: List<Hero>, result: FloorResult): void
+  #cleanup(party: List<Hero>): void
+  #getFloorName(): String
+}
+
+class BossFloor {
+  -boss: Monster
+  -floorName: String
+  +BossFloor(floorName: String)
+  #announce(): void
+  #setup(party: List<Hero>): void
+  #resolveChallenge(party: List<Hero>): FloorResult
+  #awardLoot(party: List<Hero>, result: FloorResult): void
+  #cleanup(party: List<Hero>): void
+  #getFloorName(): String
+}
+
+class FloorResult {
+  -cleared: boolean
+  -damageTaken: int
+  -summary: String
+  +FloorResult(cleared: boolean, damageTaken: int, summary: String)
+  +isCleared(): boolean
+  +getDamageTaken(): int
+  +getSummary(): String
+}
+
+class Hero
+class Monster
+
+TowerFloor <|-- CombatFloor
+TowerFloor <|-- TrapFloor
+TowerFloor <|-- RestFloor
+TowerFloor <|-- BossFloor
+
+TowerFloor ..> Hero : party
+TowerFloor ..> FloorResult : returns
+CombatFloor --> Monster
+BossFloor --> Monster
+
+@enduml
